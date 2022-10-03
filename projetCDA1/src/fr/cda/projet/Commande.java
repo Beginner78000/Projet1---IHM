@@ -3,19 +3,26 @@ package fr.cda.projet;
 import java.util.*;
 
 // Classe de definition d'une commande
-//
 public class Commande {
-    // Les caracteristiques d'une commande
-    //
-    private int numero; // numero de la commande
-    private String date; // date de la commande. Au format JJ/MM/AAAA
-    private String client; // nom du client
-    private ArrayList<String> references; // les references des produits de la commande
+
+    private int numero;
+    private String date;
+    private String client;
+    private ArrayList<String> references;
     private boolean isDelivered;
     private String reason;
 
-    // TODO vous devez coder le reste (constructeur, methodes ...)
-    // Constructeur
+    /**
+     * Constructeur (Les caracteristiques d'une commande)
+     * 
+     * @param numero int numero de la commande
+     * @param date   String date de la commande. Au format JJ/MM/AAAA
+     * @param client String nom du client
+     *               ArrayList<String> references les references des produits de la
+     *               commande
+     *               boolean isDelivered livraison livré ou non livré
+     *               String reason information sur la livraison
+     */
     public Commande(int numero, String date,
             String client) {
         this.numero = numero;
@@ -26,6 +33,9 @@ public class Commande {
         reason = "";
     }
 
+    /**
+     * @return boolean retourne true si la commande a été livré
+     */
     public boolean isDelivered() {
         return isDelivered;
     }
@@ -74,12 +84,18 @@ public class Commande {
         this.references = references;
     }
 
-    // On ajoute une ref à une commande déjà existante
+    /**
+     * @param ref récupère la référence d'une commande
+     *            ajoute une ref à une commande déjà existante
+     */
     public void addRef(String ref) {
         references.add(ref);
     }
 
-    // Conversion en chaine
+    /**
+     * Conversion en chaine
+     * des caractéristiques d'une Commande
+     */
     public String toString() {
         String str = "Commande          : " + numero +
                 "\n   Date           : " + date +

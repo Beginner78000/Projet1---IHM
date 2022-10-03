@@ -3,17 +3,20 @@ package fr.cda.projet;
 import java.util.*;
 
 // Classe de definition d'un produit du stock
-//
 public class Produit {
-    // Les caracteristiques d'un Produit
-    //
-    private String reference; // reference du produit
-    private String nom; // nom du produit
-    private double prix; // prix du produit
-    private int quantite; // quantit� du produit
+    private String reference;
+    private String nom;
+    private double prix;
+    private int quantite;
 
-    // Constructeur
-    //
+    /**
+     * Constructeur (caractéristiques d'un Produit)
+     * 
+     * @param reference String reference du produit
+     * @param nom       String nom du produit
+     * @param prix      double prix du produit
+     * @param quantite  int quantite du produit
+     */
     public Produit(String reference,
             String nom,
             double prix,
@@ -56,8 +59,10 @@ public class Produit {
         this.quantite = quantite;
     }
 
-    // Conversion en chaine
-    //
+    /**
+     * Conversion en chaine
+     * des caractéristique d'un Produit
+     */
     public String toString() {
         String str = String.format("%-15s %-50s %3.2f  %3d", reference, nom, prix, quantite);
         return str + "\n";

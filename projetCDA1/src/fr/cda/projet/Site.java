@@ -7,13 +7,16 @@ import fr.cda.util.*;
 
 // Classe de definition du site de vente
 public class Site {
+
     private ArrayList<Produit> stock; // Les produits du stock
     private ArrayList<Commande> commandes; // Les bons de commande
 
-    // Constructeur
     /**
+     * Constructeur
+     * 
      * @throws FileNotFoundException
      * @throws IOException
+     * 
      */
     public Site() throws FileNotFoundException, IOException {
         stock = new ArrayList<Produit>();
@@ -24,7 +27,10 @@ public class Site {
 
     }
 
-    // Chargement du fichier de stock
+    /**
+     * @param nomFichier nom du fichier à lire
+     *                   Void Chargement du fichier de stock
+     */
     private void initialiserStock(String nomFichier) {
         String[] lignes = Terminal.lireFichierTexte(nomFichier);
         for (String ligne : lignes) {
@@ -42,6 +48,11 @@ public class Site {
         }
     }
 
+    /**
+     * @param nomFichier nom du fichier à lire
+     * @throws IOException
+     *                     Void Chargement du fichier des commandes
+     */
     private void initialiserCommande(String nomFichier) throws IOException {
         // Le fichier d'entrée
         String[] lignes = Terminal.lireFichierTexte(nomFichier);
@@ -74,8 +85,9 @@ public class Site {
 
     }
 
-    // Methode qui retourne sous la forme d'une chaine de caractere
-    // tous les produits du stock
+    /**
+     * @return String la liste de tous les produits
+     */
     public String listerTousProduits() {
         String res = "";
         for (Produit prod : stock)
@@ -84,8 +96,9 @@ public class Site {
         return res;
     }
 
-    // Methode qui retourne sous la forme d'une chaine de caractere
-    // toutes les commandes
+    /**
+     * @return String La liste de toutes les commandes
+     */
     public String listerToutesCommandes() {
         String res = "";
         for (Commande c : commandes)
@@ -94,8 +107,10 @@ public class Site {
         return res;
     }
 
-    // Methode qui retourne sous la forme d'une chaine de caractere
-    // une commande
+    /**
+     * @param numero int numero de la commande demandé
+     * @return String la commande demandé
+     */
     public String listerCommande(int numero) {
         String res = null;
         for (int i = 0; i < commandes.size(); i++) {
@@ -111,7 +126,7 @@ public class Site {
 
     /**
      * @param numero numero de la commande recherchée
-     * @return retourne la commande trouvée sinon null
+     * @return Commande retourne la commande trouvée sinon null
      */
     public Commande trouverCommande(int numero) {
         // On parcourt la liste des commandes
@@ -125,6 +140,9 @@ public class Site {
         return null;
     }
 
+    /**
+     * @return String retourne les commandes non livrés
+     */
     public String delivery() {
         String res = "Commandes non livrés : \n";
         String trait = "======================================= \n";
@@ -134,6 +152,7 @@ public class Site {
             // Si la commande n'a pas été encore livré
             if (!c.isDelivered()) {
                 boolean isOk = true;
+                String info = "";
                 // On parcourt l'ArrayList référence pour checker le stock
                 for (String e : c.getReferences()) {
                     StringTokenizer strRef = new StringTokenizer(e, "=");
@@ -153,7 +172,7 @@ public class Site {
                         // la livraison n'est pas possible
                         isOk = false;
                         // On renvoit un message personnalisé
-                        String info = "Il va manquer -" + calQuantite + " au produit : " + reference + "\n";
+                        info = info + "Il va manquer -" + calQuantite + " au produit : " + reference + "\n";
                     }
                 }
                 // S'il y a suffisement de stock(commande correct)
@@ -185,8 +204,10 @@ public class Site {
         return res;
     }
 
-    // Afin de vérifier les stocks
-    // On créé la méthode trouverProduit
+    /**
+     * @param ref reférence du produit recherché
+     * @return Produit retourne le produit si trouvé sinon null
+     */
     public Produit trouverProduit(String ref) {
         // On parcourt la liste des produits
         for (Produit p : stock) {
@@ -199,20 +220,34 @@ public class Site {
         return null;
 
     }
-    
-    public String sumSales(){
-        for(Commande c : commandes){
-            // On vérifie si la commande a été livré
-            if(c.isDelivered()){
-                // On récupère chaque commande livré et on les additionne
-                for(String refCmd : c.getReferences()){
-                    StringTokenizer strRef = new StringTokenizer(refCmd, "=");
-                        String reference = strRef.nextToken();
-                        int nbCommande = Integer.valueOf(strRef.nextToken().replaceAll("[^0-9]", ""));
 
-                        Produit p = trouverProduit(reference);
+    /**
+     * @return String retourne la somme totale
+     *         des commandes livrés
+     */
+    public String sumSales() {
+        double sum = 0.0;
+        String res = "";
+        for (Commande c : commandes) {
+            res = "COMMANDE : " + c.getNumero() + "\n";
+            // On vérifie si les commandes qui ont été livré
+            if (c.isDelivered()) {
+                for (String refCmd : c.getReferences()) {
+                    StringTokenizer strRef = new StringTokenizer(refCmd, "=");
+                    String reference = strRef.nextToken();
+                    int nbCommande = Integer.valueOf(strRef.nextToken().replaceAll("[^0-9]", ""));
+
+                    Produit p = trouverProduit(reference);
+                    // On additionne au fur et à mesure la somme de chaque commande
+                    sum = sum + p.getPrix() * (double) nbCommande;
+                    res = (p.getNom() + nbCommande + p.getPrix() + "\n").toString();
                 }
+                res = res + "\n";
             }
         }
+        // On retourne le résultat
+        res = res + "====================== \n";
+        res = res + "SOMME : " + sum + " euros";
+        return res;
     }
 }

@@ -89,9 +89,9 @@ public class GUISite implements FormulaireInt {
                 form.setValeurChamp("RESULTAT", "La commande a déjà été livré, elle ne peut pas être modifié");
 
             } else {
-                // Sinon on affiche la nouvelle fenêtre IHM
-                GUIModifierCommande ihm = new GUIModifierCommand();
-            }
+            //   Sinon on affiche la nouvelle fenêtre IHM
+              GUIModifierCommande ihm = new GUIModifierCommand();
+              }
         }
 
         // Calcule somme vente
