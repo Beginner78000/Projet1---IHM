@@ -6,11 +6,12 @@ import fr.cda.ihm.*;
 //
 public class GUISite implements FormulaireInt {
     private Site site; // Le site
+    private Commande commandes; // Les bon de commandes
 
     // Constructeur
-    //
     public GUISite(Site site) {
         this.site = site;
+        // this.commandes = commandes;
 
         // Creation du formulaire
         Formulaire form = new Formulaire("Site de vente", this, 1100, 730);
@@ -90,8 +91,8 @@ public class GUISite implements FormulaireInt {
 
             } else {
             //   Sinon on affiche la nouvelle fenêtre IHM
-              GUIModifierCommande ihm = new GUIModifierCommand();
-              }
+            //   GUIModifierCommande ihm = new GUIModifierCommande(this, this.commandes, this.site);
+            }
         }
 
         // Calcule somme vente

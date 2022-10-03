@@ -11,10 +11,8 @@ import fr.cda.util.*;
 
 // Classe principale d'execution du projet
 //
-public class Projet
-{
-    public static void main(String a_args[]) throws FileNotFoundException, IOException
-    {
+public class Projet {
+    public static void main(String a_args[]) throws FileNotFoundException, IOException {
         Terminal.ecrireStringln("Execution du projet ");
 
         Site site = new Site();

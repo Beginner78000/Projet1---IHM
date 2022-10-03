@@ -6,11 +6,13 @@ import fr.cda.ihm.*;
 //
 public class IHMSite implements FormulaireInt {
     private Site site; // Le site
+    private Commande commandes; // Les bon de commandes
+    private Formulaire form;
 
     // Constructeur
-    //
-    public IHMSite(Site site) {
+    public IHMSite(Site site, Commande commandes) {
         this.site = site;
+        this.commandes = commandes;
 
         // Creation du formulaire
         Formulaire form = new Formulaire("Site de vente", this, 1100, 730);
@@ -91,7 +93,7 @@ public class IHMSite implements FormulaireInt {
 
             } else {
                 // Sinon on affiche la nouvelle fenêtre IHM
-                GUIModifierCommande ihm = new GUIModifierCommand();
+                // GUIModifierCommande ihm = new GUIModifierCommande(this, this.commandes, this.site);
             }
         }
 
