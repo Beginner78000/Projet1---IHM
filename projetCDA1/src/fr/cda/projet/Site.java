@@ -199,4 +199,20 @@ public class Site {
         return null;
 
     }
+    
+    public String sumSales(){
+        for(Commande c : commandes){
+            // On vérifie si la commande a été livré
+            if(c.isDelivered()){
+                // On récupère chaque commande livré et on les additionne
+                for(String refCmd : c.getReferences()){
+                    StringTokenizer strRef = new StringTokenizer(refCmd, "=");
+                        String reference = strRef.nextToken();
+                        int nbCommande = Integer.valueOf(strRef.nextToken().replaceAll("[^0-9]", ""));
+
+                        Produit p = trouverProduit(reference);
+                }
+            }
+        }
+    }
 }

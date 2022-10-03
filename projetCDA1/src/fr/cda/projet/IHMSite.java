@@ -27,6 +27,8 @@ public class IHMSite implements FormulaireInt {
         form.addButton("AFF_COMMANDE", "Afficher");
         form.addLabel("");
         form.addButton("LIVRER", "Livrer");
+        form.addButton("MODIF_COMMANDE", "Modifier");
+        form.addButton("SUM_SALES", "Total ventes");
 
         form.setPosition(400, 0);
         form.addZoneText("RESULTATS", "Resultats",
@@ -65,9 +67,37 @@ public class IHMSite implements FormulaireInt {
             form.setValeurChamp("RESULTATS", res);
         }
 
-        // Affichage de la livraison
+        // Affichage des livraisons
         if (nomSubmit.equals("LIVRER")) {
             String res = site.delivery();
+            form.setValeurChamp("RESULTATS", res);
+        }
+
+        // Modifier bon de commande
+        if (nomSubmit.equals("MODIF_COMMANDE")) {
+            // On récupère le numéro de la commande
+            String numCmd = form.getValeurChamp("NUM_COMMANDE");
+            // On convertie la String en int
+            int ConvertNumCmd = Integer.parseInt(numCmd);
+
+            // On va vérifier si le numero de commande existe
+            Commande cmd = site.trouverCommande(ConvertNumCmd);
+            // S'il n'existe pas alors on renvoie un message d'erreur
+            if (cmd == null) {
+                form.setValeurChamp("RESULTAT", "Numéro de commande non trouvé");
+            } else if (cmd.isDelivered()) {
+                // Si le bon de commande a été livré, on ne peut pas le modifier
+                form.setValeurChamp("RESULTAT", "La commande a déjà été livré, elle ne peut pas être modifié");
+
+            } else {
+                // Sinon on affiche la nouvelle fenêtre IHM
+                GUIModifierCommande ihm = new GUIModifierCommand();
+            }
+        }
+
+        // Calcule somme vente
+        if (nomSubmit.equals("SUM_SALES")) {
+            String res = site.sumSales();
             form.setValeurChamp("RESULTATS", res);
         }
     }
